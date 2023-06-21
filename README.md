@@ -3,10 +3,10 @@
 ## About Project
 This is an Ansible code that installs Jenkins on Ubuntu Linux server and configure CI/CD on that server.
 
-## Playbook: install-jenkins.yml
+### install-jenkins.yml playbook
 This playbook updates the apt cache, installs Java (OpenJDK 11), adds the Jenkins repository key, adds the Jenkins repository, installs the Jenkins package, and starts the Jenkins service.
 
-## Playbook: configure-jenkins.yml
+### configure-jenkins.yml playbook
 After running this playbook, you have Jenkins configured with the necessary plugins and a pipeline job ready for CI/CD.
 
 This playbook performs the following tasks:
