@@ -1,0 +1,57 @@
+---
+- name: Configure Jenkins CI/CD
+  hosts: jenkinshost
+  become: yes
+  remote_user: majid
+  become_user: root
+  tasks:
+    - name: Install required plugins
+      jenkins_plugin:
+        name: "{{ item }}"
+      with_items:
+        - git
+        - workflow-aggregator
+        - docker-workflow
+        - blueocean
+      register: plugin_result
+
+    - name: Restart Jenkins service
+      service:
+        name: jenkins
+        state: restarted
+      when: plugin_result is changed
+
+    - name: Create Jenkins pipeline job
+      jenkins_job:
+        config: |
+          <flow-definition plugin="workflow-job@2.40">
+            <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.86">
+              <script>
+                pipeline {
+                  agent any
+                  stages {
+                    stage('Build') {
+                      steps {
+                        sh 'echo "Building..."'
+                        //  build steps will place here
+                      }
+                    }
+                    stage('Test') {
+                      steps {
+                        sh 'echo "Testing..."'
+                        //  test steps will place here
+                      }
+                    }
+                    stage('Deploy') {
+                      steps {
+                        sh 'echo "Deploying..."'
+                        //  deployment steps will place here
+                      }
+                    }
+                  }
+                }
+              </script>
+            </definition>
+          </flow-definition>
+        name: MyPipelineJob
+        state: present
