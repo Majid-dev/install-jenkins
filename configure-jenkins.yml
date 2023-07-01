@@ -2,7 +2,7 @@
 - name: Configure Jenkins CI/CD
   hosts: local
   become: yes
-  remote_user: majid
+  remote_user: ubuntu
   become_user: root
   tasks:
     - name: Install required plugins
