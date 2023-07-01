@@ -1,5 +1,5 @@
 ---
-- hosts: jenkinshost
+- hosts: local
   become: yes
   remote_user: majid
   become_user: root
