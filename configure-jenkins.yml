@@ -14,6 +14,7 @@
         - docker-workflow
         - blueocean
       register: plugin_result
+      ignore_errors: true
 
     - name: Restart Jenkins service
       service:
